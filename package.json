@@ -1,12 +1,12 @@
 {
-    "name": "@wharfkit/transact-plugin-template",
-    "description": "A template to create plugins for use with @wharfkit/session transact method.",
+    "name": "@wharfkit/resource-provider-cosigner-plugin",
+    "description": "Automatically cosign transactions to assume resource costs using a noop action.",
     "version": "0.1.0",
-    "homepage": "https://github.com/wharfkit/transact-plugin-template",
+    "homepage": "https://github.com/wharfkit/resource-provider-cosigner-plugin",
     "license": "BSD-3-Clause",
-    "main": "lib/transact-plugin-template.js",
-    "module": "lib/transact-plugin-template.m.js",
-    "types": "lib/transact-plugin-template.d.ts",
+    "main": "lib/resource-provider-cosigner-plugin.js",
+    "module": "lib/resource-provider-cosigner-plugin.m.js",
+    "types": "lib/resource-provider-cosigner-plugin.d.ts",
     "sideEffects": false,
     "files": [
         "lib/*",
@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@wharfkit/session": "^0.1.1",
+        "pako": "^2.0.4",
         "tslib": "^2.1.0"
     },
     "devDependencies": {

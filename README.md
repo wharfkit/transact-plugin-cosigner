@@ -1,13 +1,39 @@
-# @wharfkit/transact-plugin-template
+# @wharfkit/resource-provider-cosigner-plugin
 
-A template to create a `transactPlugin` for use during a `transact` call within the `@wharfkit/session` library.
+Automatically cosign transactions to assume resource costs using a noop action.
+
+## Installation
+
+```bash
+yarn install @wharfkit/resource-provider-cosigner-plugin
+```
 
 ## Usage
 
--   [Use this as a template.](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
--   Write your plugin's logic.
--   Publish it on Github or npmjs.com
--   Include it in your project and use it.
+Include this `transactPlugin` in your Wharf Session Kit instance and specify the relevant information.
+
+```js
+const session = new Session({
+    chain: {
+        id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+        url: 'https://jungle4.greymass.com',
+    },
+    permissionLevel: 'wharfkit1111@test',
+    transactPlugins: [
+        new ResourceProviderCosignerPlugin({
+            actor: 'wharfkitnoop',
+            permission: 'cosign',
+            privateKey: '5JfFWg1CWsNTeXTWMyfChXXbyD31TCTknSVGwXDSpT6bPxKYLMM',
+            // Optional parameters
+            // contract: 'greymassnoop', // The noop contract name
+            // action: 'noop', // The noop contract action
+        }),
+    ],
+    walletPlugin: wallet,
+})
+```
+
+Any transaction initiated with this session will automatically prepend a `greymassnoop:noop` action and sign it using the permissions specified for the `ResourceProviderCosignerPlugin`.
 
 ## Developing
 
