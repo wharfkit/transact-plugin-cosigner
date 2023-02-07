@@ -16,7 +16,7 @@
         "prepare": "make"
     },
     "dependencies": {
-        "@wharfkit/session": "^0.1.1",
+        "@wharfkit/session": "^0.3.0-ui-6",
         "pako": "^2.0.4",
         "tslib": "^2.1.0"
     },
