@@ -2,19 +2,25 @@ import {assert} from 'chai'
 import {mockFetch} from '$test/utils/mock-fetch'
 import {ResourceProviderCosignerPlugin} from '../../src/index'
 
-import {PrivateKey, Session, SessionOptions, WalletPluginPrivateKey} from '@wharfkit/session'
+import {PrivateKey, Session, SessionArgs, SessionOptions} from '@wharfkit/session'
+
+import {WalletPluginPrivateKey} from '@wharfkit/wallet-plugin-privatekey'
 
 const wallet = new WalletPluginPrivateKey({
     privateKey: PrivateKey.from('5Jtoxgny5tT7NiNFp1MLogviuPJ9NniWjnU4wKzaX4t7pL4kJ8s'),
 })
 
-const mockSessionOptions: SessionOptions = {
+const mockSessionArgs: SessionArgs = {
     chain: {
         id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
         url: 'https://jungle4.greymass.com',
     },
-    fetch: mockFetch,
     permissionLevel: 'wharfkit1111@test',
+    walletPlugin: wallet,
+}
+
+const mockSessionOptions: SessionOptions = {
+    fetch: mockFetch,
     transactPlugins: [
         new ResourceProviderCosignerPlugin({
             actor: 'wharfkitnoop',
@@ -22,12 +28,11 @@ const mockSessionOptions: SessionOptions = {
             privateKey: '5JfFWg1CWsNTeXTWMyfChXXbyD31TCTknSVGwXDSpT6bPxKYLMM',
         }),
     ],
-    walletPlugin: wallet,
 }
 
 suite('cosigner', function () {
     test('prepends action and signs transaction', async function () {
-        const session = new Session(mockSessionOptions)
+        const session = new Session(mockSessionArgs, mockSessionOptions)
         const action = {
             authorization: [
                 {
