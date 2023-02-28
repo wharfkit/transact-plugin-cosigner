@@ -15,10 +15,9 @@
     "scripts": {
         "prepare": "make"
     },
-    "dependencies": {
-        "@wharfkit/session": "^0.3.0-ui-6",
-        "pako": "^2.0.4",
-        "tslib": "^2.1.0"
+    "dependencies": {},
+    "peerDependencies": {
+        "@wharfkit/session": "^0.3.0-ui-16"
     },
     "devDependencies": {
         "@rollup/plugin-alias": "^3.1.4",
@@ -33,6 +32,7 @@
         "@types/node": "^18.7.18",
         "@typescript-eslint/eslint-plugin": "^5.20.0",
         "@typescript-eslint/parser": "^5.20.0",
+        "@wharfkit/session": "^0.3.0-ui-16",
         "@wharfkit/wallet-plugin-privatekey": "^0.2.0",
         "chai": "^4.3.4",
         "eslint": "^8.13.0",
@@ -48,6 +48,7 @@
         "rollup-plugin-terser": "^7.0.2",
         "ts-node": "^10.9.1",
         "tsconfig-paths": "^4.1.1",
+        "tslib": "^2.5.0",
         "typedoc": "^0.23.14",
         "typedoc-plugin-mermaid": "^1.9.0",
         "typescript": "^4.1.2"
