@@ -27,7 +27,8 @@ class noop extends Struct {
     static abiFields = []
 }
 
-export class ResourceProviderCosignerPlugin extends AbstractTransactPlugin {
+export class TransactPluginCosigner extends AbstractTransactPlugin {
+    public id = 'transact-plugin-cosigner'
     readonly actor: Name
     readonly permission: Name
     readonly privateKey: PrivateKey

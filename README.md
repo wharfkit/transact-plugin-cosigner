@@ -1,11 +1,11 @@
-# @wharfkit/resource-provider-cosigner-plugin
+# @wharfkit/transact-plugin-cosigner
 
 Automatically cosign transactions to assume resource costs using a noop action.
 
 ## Installation
 
 ```bash
-yarn install @wharfkit/resource-provider-cosigner-plugin
+yarn install @wharfkit/transact-plugin-cosigner
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ const session = new Session({
     },
     permissionLevel: 'wharfkit1111@test',
     transactPlugins: [
-        new ResourceProviderCosignerPlugin({
+        new TransactPluginCosigner({
             actor: 'wharfkitnoop',
             permission: 'cosign',
             privateKey: '5JfFWg1CWsNTeXTWMyfChXXbyD31TCTknSVGwXDSpT6bPxKYLMM',
@@ -33,7 +33,7 @@ const session = new Session({
 })
 ```
 
-Any transaction initiated with this session will automatically prepend a `greymassnoop:noop` action and sign it using the permissions specified for the `ResourceProviderCosignerPlugin`.
+Any transaction initiated with this session will automatically prepend a `greymassnoop:noop` action and sign it using the permissions specified for the `TransactPluginCosigner`.
 
 ## Developing
 

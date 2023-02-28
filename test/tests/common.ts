@@ -1,6 +1,6 @@
 import {assert} from 'chai'
 import {mockFetch} from '$test/utils/mock-fetch'
-import {ResourceProviderCosignerPlugin} from '../../src/index'
+import {TransactPluginCosigner} from '../../src/index'
 
 import {PrivateKey, Session, SessionArgs, SessionOptions} from '@wharfkit/session'
 
@@ -22,7 +22,7 @@ const mockSessionArgs: SessionArgs = {
 const mockSessionOptions: SessionOptions = {
     fetch: mockFetch,
     transactPlugins: [
-        new ResourceProviderCosignerPlugin({
+        new TransactPluginCosigner({
             actor: 'wharfkitnoop',
             permission: 'cosign',
             privateKey: '5JfFWg1CWsNTeXTWMyfChXXbyD31TCTknSVGwXDSpT6bPxKYLMM',
