@@ -14,8 +14,6 @@ import {
     Transaction,
 } from '@wharfkit/session'
 
-import zlib from 'pako'
-
 interface ResourceProviderCosignerOptions {
     readonly actor: NameType
     readonly permission: NameType
@@ -91,22 +89,10 @@ export class ResourceProviderCosignerPlugin extends AbstractTransactPlugin {
             actions: [newAction, ...request.getRawActions()],
         })
 
-        // Establish an AbiProvider based on the session context.
-        const abiProvider: AbiProvider = {
-            getAbi: async (account: Name): Promise<ABIDef> => {
-                const response = await context.client.v1.chain.get_abi(account)
-                if (!response.abi) {
-                    /* istanbul ignore next */
-                    throw new Error('could not load abi') // TODO: Better coverage for this
-                }
-                return response.abi
-            },
-        }
-
         // Create a new request based on this full transaction
         const newRequest = await SigningRequest.create(
             {transaction: newTransaction},
-            {zlib, abiProvider}
+            context.esrOptions
         )
 
         // Return the modified request
