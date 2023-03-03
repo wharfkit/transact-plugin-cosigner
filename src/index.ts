@@ -1,6 +1,4 @@
 import {
-    ABIDef,
-    AbiProvider,
     AbstractTransactPlugin,
     Action,
     Name,
