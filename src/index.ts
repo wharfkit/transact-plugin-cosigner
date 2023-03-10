@@ -48,16 +48,22 @@ export class TransactPluginCosigner extends AbstractTransactPlugin {
 
     register(context: TransactContext): void {
         context.addHook(TransactHookTypes.beforeSign, async (request, context) => {
-            // Modify request to prepend noop action
+            // Modify request data to prepend noop action
             const modifiedRequest = await this.prependAction(request)
             // Sign Transaction
             const resolved = await context.resolve(modifiedRequest)
             const signature = this.privateKey.signDigest(
                 resolved.transaction.signingDigest(request.getChainId())
             )
+            // Create a new request that is a 'Transaction' and not an 'Action[]' array.
+            const newRequest = SigningRequest.fromTransaction(
+                context.chain.id,
+                resolved.serializedTransaction,
+                context.esrOptions
+            )
             // Return modified request and new signature
             return {
-                request: modifiedRequest,
+                request: newRequest,
                 signatures: [signature],
             }
         })
