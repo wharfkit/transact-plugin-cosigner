@@ -3,13 +3,13 @@ import {
     Action,
     Name,
     NameType,
+    prependAction,
     PrivateKey,
     PrivateKeyType,
     SigningRequest,
     Struct,
     TransactContext,
     TransactHookTypes,
-    Transaction,
 } from '@wharfkit/session'
 
 interface ResourceProviderCosignerOptions {
@@ -49,11 +49,11 @@ export class TransactPluginCosigner extends AbstractTransactPlugin {
     register(context: TransactContext): void {
         context.addHook(TransactHookTypes.beforeSign, async (request, context) => {
             // Modify request to prepend noop action
-            const modifiedRequest = await this.prependAction(request, context)
+            const modifiedRequest = await this.prependAction(request)
             // Sign Transaction
-            const transaction = modifiedRequest.getRawTransaction()
+            const resolved = await context.resolve(modifiedRequest)
             const signature = this.privateKey.signDigest(
-                transaction.signingDigest(request.getChainId())
+                resolved.transaction.signingDigest(request.getChainId())
             )
             // Return modified request and new signature
             return {
@@ -63,10 +63,7 @@ export class TransactPluginCosigner extends AbstractTransactPlugin {
         })
     }
 
-    async prependAction(
-        request: SigningRequest,
-        context: TransactContext
-    ): Promise<SigningRequest> {
+    async prependAction(request: SigningRequest): Promise<SigningRequest> {
         // Create noop action to assume resource costs
         const newAction = Action.from({
             account: this.contract,
@@ -80,20 +77,8 @@ export class TransactPluginCosigner extends AbstractTransactPlugin {
             data: noop.from({}),
         })
 
-        // Resolve the current request into a fully formed transaction w/ tapos
-        const info = await context.client.v1.chain.get_info()
-        const header = info.getTransactionHeader()
-        const newTransaction = Transaction.from({
-            ...header,
-            actions: [newAction, ...request.getRawActions()],
-        })
-
-        // Create a new request based on this full transaction
-        const newRequest = await SigningRequest.create(
-            {transaction: newTransaction},
-            context.esrOptions
-        )
-
+        // Prepend this action to the request
+        const newRequest = prependAction(request, newAction)
         // Return the modified request
         return newRequest
     }
