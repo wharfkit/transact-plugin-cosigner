@@ -56,11 +56,9 @@ export class TransactPluginCosigner extends AbstractTransactPlugin {
                 resolved.transaction.signingDigest(request.getChainId())
             )
             // Create a new request that is a 'Transaction' and not an 'Action[]' array.
-            const newRequest = SigningRequest.fromTransaction(
-                context.chain.id,
-                resolved.serializedTransaction,
-                context.esrOptions
-            )
+            const newRequest = await context.createRequest({
+                transaction: resolved.transaction,
+            })
             // Return modified request and new signature
             return {
                 request: newRequest,
