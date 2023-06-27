@@ -17,7 +17,7 @@
     },
     "dependencies": {},
     "peerDependencies": {
-        "@wharfkit/session": "^0.3.2"
+        "@wharfkit/session": "^0.5.0"
     },
     "devDependencies": {
         "@rollup/plugin-alias": "^3.1.4",
@@ -32,8 +32,8 @@
         "@types/node": "^18.7.18",
         "@typescript-eslint/eslint-plugin": "^5.20.0",
         "@typescript-eslint/parser": "^5.20.0",
-        "@wharfkit/session": "^0.3.2",
-        "@wharfkit/wallet-plugin-privatekey": "^0.3.0",
+        "@wharfkit/session": "^0.5.0",
+        "@wharfkit/wallet-plugin-privatekey": "^0.5.0",
         "chai": "^4.3.4",
         "eslint": "^8.13.0",
         "eslint-config-prettier": "^8.1.0",
@@ -52,6 +52,6 @@
         "typedoc": "^0.23.14",
         "typedoc-plugin-mermaid": "^1.9.0",
         "typescript": "^4.1.2",
-        "yarn-deduplicate": "^6.0.1"
+        "yarn-deduplicate": "^6.0.2"
     }
 }
