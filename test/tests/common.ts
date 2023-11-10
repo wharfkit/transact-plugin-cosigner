@@ -54,7 +54,7 @@ suite('cosigner', function () {
         assert.equal(result.signatures.length, 2)
         assert.equal(
             result.response?.transaction_id,
-            '940aa75ac862947f47d3beb49579159b7ca48f88112e38d8d304d0185ba482ce'
+            '414ca0ffd8042b6d7f24ae1c62f652ac2fb33a1c12fd4db3b66489239e00c08a'
         )
     })
 })
