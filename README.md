@@ -13,24 +13,25 @@ yarn install @wharfkit/transact-plugin-cosigner
 Include this `transactPlugin` in your Wharf Session Kit instance and specify the relevant information.
 
 ```js
-const session = new Session({
-    chain: {
-        id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
-        url: 'https://jungle4.greymass.com',
+const session = new Session(
+    {
+        chain: {
+            id: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d',
+            url: 'https://jungle4.greymass.com',
+        },
+        permissionLevel: 'wharfkit1111@test',
+        walletPlugin: wallet,
     },
-    permissionLevel: 'wharfkit1111@test',
-    transactPlugins: [
-        new TransactPluginCosigner({
-            actor: 'wharfkitnoop',
-            permission: 'cosign',
-            privateKey: '5JfFWg1CWsNTeXTWMyfChXXbyD31TCTknSVGwXDSpT6bPxKYLMM',
-            // Optional parameters
-            // contract: 'greymassnoop', // The noop contract name
-            // action: 'noop', // The noop contract action
-        }),
-    ],
-    walletPlugin: wallet,
-})
+    {
+        transactPlugins: [
+            new TransactPluginCosigner({
+                actor: 'wharfkitnoop',
+                permission: 'cosign',
+                privateKey: '5JfFWg1CWsNTeXTWMyfChXXbyD31TCTknSVGwXDSpT6bPxKYLMM',
+            }),
+        ],
+    }
+)
 ```
 
 Any transaction initiated with this session will automatically prepend a `greymassnoop:noop` action and sign it using the permissions specified for the `TransactPluginCosigner`.

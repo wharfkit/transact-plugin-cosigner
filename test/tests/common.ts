@@ -2,7 +2,7 @@ import {assert} from 'chai'
 import {mockFetch} from '$test/utils/mock-fetch'
 import {TransactPluginCosigner} from '../../src/index'
 
-import {Session, SessionArgs, SessionOptions} from '@wharfkit/session'
+import {Chains, Session, SessionArgs, SessionOptions} from '@wharfkit/session'
 
 import {WalletPluginPrivateKey} from '@wharfkit/wallet-plugin-privatekey'
 
@@ -28,7 +28,48 @@ const mockSessionOptions: SessionOptions = {
     ],
 }
 
+const privateKey = '5JfFWg1CWsNTeXTWMyfChXXbyD31TCTknSVGwXDSpT6bPxKYLMM'
+
 suite('cosigner', function () {
+    test('foo', async function () {
+        const session = new Session(
+            {
+                chain: Chains.WAX,
+                permissionLevel: 'test3414.dm@active',
+                walletPlugin: wallet,
+            },
+            {
+                transactPlugins: [
+                    new TransactPluginCosigner({
+                        actor: 'rewards.dm',
+                        permission: 'active',
+                        privateKey,
+                        contract: 'greymassnoop',
+                        action: 'noop',
+                    }),
+                ],
+            }
+        )
+        const action = {
+            authorization: [
+                {
+                    actor: 'test3414.dm',
+                    permission: 'active',
+                },
+            ],
+            account: 'eosio.token',
+            name: 'transfer',
+            data: {
+                from: 'test3414.dm',
+                to: 'rewards.dm',
+                quantity: '0.0001 EOS',
+                memo: 'wharfkit cosign plugin test',
+            },
+        }
+        const result = await session.transact({
+            action,
+        })
+    })
     test('prepends action and signs transaction', async function () {
         const session = new Session(mockSessionArgs, mockSessionOptions)
         const action = {
